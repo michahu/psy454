@@ -6,6 +6,7 @@ class RegressionBase(nn.Module):
     def __init__(self, input_dim, embedding_dim):
         super().__init__()
         self.embedding = nn.Embedding(input_dim, embedding_dim)
+        self.embedding.weight.requires_grad=False
 
 class Linear(RegressionBase):
     def __init__(self, input_dim, embedding_dim, output_dim):
@@ -29,7 +30,8 @@ class MLP1(RegressionBase):
     def forward(self, x):
         x.transpose_(1, 0)
         x = self.embedding(x)
-        x = torch.flatten(x)
+        x = torch.flatten(x, start_dim=1)
+        # print(x.shape)
         x = self.l1(x)
         x = F.relu(x)
         x = self.l2(x)
@@ -45,7 +47,7 @@ class MLP2(RegressionBase):
     def forward(self, x):
         x.transpose_(1, 0)
         x = self.embedding(x)
-        x = torch.flatten(x)
+        x = torch.flatten(x, start_dim=1)
         x = self.l1(x)
         x = F.relu(x)
         x = self.l2(x)
