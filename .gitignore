@@ -3,7 +3,8 @@ __pycache__
 .vscode
 *.out
 *.slurm
-# models
 *.pth
 wandb
 .ipynb_checkpoints/
+glove*
+garbage.ipynb
