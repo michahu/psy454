@@ -24,6 +24,33 @@ class Linear(RegressionBase):
         x = self.linear(x)
         return x
 
+class MLP1Base(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super().__init__()
+        self.l1 = nn.Linear(input_dim, hidden_dim)
+        self.l2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = self.l1(x)
+        x = F.relu(x)
+        x = self.l2(x)
+        return x
+
+class MLP2Base(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super().__init__()
+        self.l1 = nn.Linear(input_dim, hidden_dim)
+        self.l2 = nn.Linear(hidden_dim, hidden_dim)
+        self.l3 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = self.l1(x)
+        x = F.relu(x)
+        x = self.l2(x)
+        x = F.relu(x)
+        x = self.l3(x)
+        return x
+
 class MLP1(RegressionBase):
     def __init__(self, input_dim, embedding_dim, hidden_dim, output_dim):
         super().__init__(input_dim, embedding_dim)
